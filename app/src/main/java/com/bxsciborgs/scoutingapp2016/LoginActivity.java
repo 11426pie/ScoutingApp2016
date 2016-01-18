@@ -24,6 +24,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 public class LoginActivity extends AppCompatActivity implements  View.OnClickListener{
     public static final String TAG = "LoginActivity";
@@ -32,15 +34,18 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
     GoogleApiClient mGoogleApiClient;
     public Toast toast;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestIdToken("1008849373609-ejp7e41mrovl1p4f41vsdml4r5d4rcnk.apps.googleusercontent.com")
                 .build();
+
         // Build a GoogleApiClient with access to the Google Sign-In API and the
 // options specified by gso.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -48,12 +53,19 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
+        Parse.initialize(this, "KBqIB66cUvbVxjCLMQw1ug3AiTdldkjoDKlhpGuo", "EmsYKeBWl79WGbAdhtjWUUYCyJuL7iABao5lbzcM");
+        ParseObject testObject = new ParseObject("AndroidTest");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
+
         mStatusTextView = (TextView)findViewById(R.id.testText);
 
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.disconnect_button).setOnClickListener(this);
+
+
 
 
     }
@@ -123,6 +135,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
     }
     private void signOut() {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
