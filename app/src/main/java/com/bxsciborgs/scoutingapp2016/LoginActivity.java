@@ -98,22 +98,24 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             mStatusTextView.setText(acct.getDisplayName()+ " has signed in!");
-            updateUI(true);
+            updateUI(true, acct);
             Log.d(TAG, acct.getDisplayName());
         } else {
             // Signed out, show unauthenticated UI
-            updateUI(false);
+            updateUI(false,null);
         }
     }
 
-    private void updateUI(boolean signedIn) {
+    private void updateUI(boolean signedIn, GoogleSignInAccount g) {
         if (signedIn) {
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
             //TRANSFER TO MAIN PAGE
-            toast = Toast.makeText(getApplicationContext(), "Sign in successful", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
-            toast.show();
+
+            Intent toMatchesAct = new Intent(this, MatchesActivity.class);
+            toMatchesAct.putExtra("AccountInfo", g);
+            startActivity(toMatchesAct);
+
         } else {
             toast = Toast.makeText(getApplicationContext(), "Sign Out", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
@@ -136,6 +138,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
 
+
     }
     private void signOut() {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
@@ -143,7 +146,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                     @Override
                     public void onResult(Status status) {
                         // [START_EXCLUDE]
-                        updateUI(false);
+                        updateUI(false,null);
                         // [END_EXCLUDE]
                     }
                 });
@@ -165,17 +168,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         return super.onOptionsItemSelected(item);
     }
 
-    private void revokeAccess() {
-        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        // [START_EXCLUDE]
-                        updateUI(false);
-                        // [END_EXCLUDE]
-                    }
-                });
-    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -184,9 +177,6 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                 break;
             case R.id.sign_out_button:
                 signOut();
-                break;
-            case R.id.disconnect_button:
-                revokeAccess();
                 break;
         }
     }

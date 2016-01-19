@@ -28,8 +28,8 @@
         android:layout_height="wrap_content"
         android:text="Sign_Out"
         android:id="@+id/sign_out_button"
-        android:layout_marginBottom="36dp"
-        android:layout_above="@+id/disconnect_button"
+        android:layout_marginBottom="65dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -40,13 +40,5 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/disconnect_button"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
