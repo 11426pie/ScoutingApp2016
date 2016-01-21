@@ -1,9 +1,19 @@
 package com.bxsciborgs.scoutingapp2016;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.parse.ParseObject;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class MatchesActivity extends AppCompatActivity {
 
@@ -11,6 +21,7 @@ public class MatchesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
+
     }
 
     @Override
@@ -34,4 +45,8 @@ public class MatchesActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    public void loadData(){
+
+    }
+
 }

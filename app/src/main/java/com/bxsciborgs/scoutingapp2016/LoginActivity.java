@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,18 +30,25 @@ import com.parse.ParseObject;
 
 public class LoginActivity extends AppCompatActivity implements  View.OnClickListener{
     public static final String TAG = "LoginActivity";
+    public boolean parseCreate;
     public final int RC_SIGN_IN = 9001;
     public TextView mStatusTextView;
     GoogleApiClient mGoogleApiClient;
     public Toast toast;
+    private SharedPreferences googleData;
+    Intent toMatchesAct;
+    UpdateInfo update;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
+        update = new UpdateInfo();
+        if(parseCreate){
+            Parse.initialize(this, "KBqIB66cUvbVxjCLMQw1ug3AiTdldkjoDKlhpGuo", "EmsYKeBWl79WGbAdhtjWUUYCyJuL7iABao5lbzcM");
+           parseCreate = false;
+        }
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestIdToken("1008849373609-ejp7e41mrovl1p4f41vsdml4r5d4rcnk.apps.googleusercontent.com")
@@ -53,17 +61,18 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        Parse.initialize(this, "KBqIB66cUvbVxjCLMQw1ug3AiTdldkjoDKlhpGuo", "EmsYKeBWl79WGbAdhtjWUUYCyJuL7iABao5lbzcM");
-        ParseObject testObject = new ParseObject("AndroidTest");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
-
         mStatusTextView = (TextView)findViewById(R.id.testText);
 
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
-        findViewById(R.id.disconnect_button).setOnClickListener(this);
+        toMatchesAct = new Intent(this, MatchesActivity.class);
+
+        googleData = getSharedPreferences("User",MODE_PRIVATE);
+        if(googleData.contains("accountName")){
+            startActivity(toMatchesAct);
+            finish();
+        }
 
 
 
@@ -100,6 +109,8 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
             mStatusTextView.setText(acct.getDisplayName()+ " has signed in!");
             updateUI(true, acct);
             Log.d(TAG, acct.getDisplayName());
+            googleData = getSharedPreferences("User",MODE_PRIVATE);
+            googleData.edit().putString("accountName",acct.getDisplayName());
         } else {
             // Signed out, show unauthenticated UI
             updateUI(false,null);
@@ -112,9 +123,10 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
             findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
             //TRANSFER TO MAIN PAGE
 
-            Intent toMatchesAct = new Intent(this, MatchesActivity.class);
-            toMatchesAct.putExtra("AccountInfo", g);
+
+
             startActivity(toMatchesAct);
+            finish();
 
         } else {
             toast = Toast.makeText(getApplicationContext(), "Sign Out", Toast.LENGTH_SHORT);
