@@ -28,6 +28,10 @@ import com.google.android.gms.common.api.Status;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class LoginActivity extends AppCompatActivity implements  View.OnClickListener{
     public static final String TAG = "LoginActivity";
     public boolean parseCreate;
@@ -44,11 +48,10 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        update = new UpdateInfo();
-        if(parseCreate){
-            Parse.initialize(this, "KBqIB66cUvbVxjCLMQw1ug3AiTdldkjoDKlhpGuo", "EmsYKeBWl79WGbAdhtjWUUYCyJuL7iABao5lbzcM");
-           parseCreate = false;
-        }
+      //  update = new UpdateInfo();
+
+
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestIdToken("1008849373609-ejp7e41mrovl1p4f41vsdml4r5d4rcnk.apps.googleusercontent.com")
@@ -74,6 +77,10 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
             finish();
         }
 
+      //  ArrayList<String> obj = update.getAllTeamNumbers();
+      //  for(int i = 0;i < obj.size();i++) {
+       //     Log.d(TAG, "Teams: " + obj.get(i));
+       // }
 
 
 
