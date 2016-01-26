@@ -57,7 +57,8 @@
         android:layout_below="@+id/textView2"
         android:layout_alignRight="@+id/scrollView"
         android:layout_alignEnd="@+id/scrollView"
-        android:hint="Search Teams"/>
+        android:hint="Search Teams"
+        android:dropDownWidth="match_parent"/>
 
 
 </RelativeLayout>

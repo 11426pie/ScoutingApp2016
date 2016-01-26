@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.google.android.gms.auth.api.Auth;
@@ -40,15 +41,23 @@ import okhttp3.Response;
 public class MatchesActivity extends AppCompatActivity implements  View.OnClickListener{
     private final OkHttpClient client = new OkHttpClient();
     public static final String TAG = "MatchesActivity";
-
+    String[] teams;
     AutoCompleteTextView auto;
+    ArrayAdapter<String> adapter;
+    List<String> team;
+    String[] t = {"1155","2265"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
-
         findViewById(R.id.button).setOnClickListener(this);
         auto = (AutoCompleteTextView) findViewById(R.id.searchTeams);
+
+        team = UpdateInfo.getTeamNumbers();
+        UpdateInfo.getJSONByTeam("1155");
+        adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, team);
+        auto.setThreshold(1);
+        auto.setAdapter(adapter);
 
 
     }

@@ -17,21 +17,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 public class UpdateInfo {
     private int objectCount;
     ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
-    static ArrayList<String> teamNumbers;
+    static List<String> teamNumbers = new ArrayList<String>();
+    static String[] arr;
 
-    public static ArrayList<String> getTeamNumbers(){
+    public static List<String> getTeamNumbers(){
         return teamNumbers;
     }
     public static void getTeams() {
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Templates");
-            // query.whereEqualTo("playerName", "Dan Stemkoski");
             query.findInBackground(new FindCallback<ParseObject>() {
                 public void done(List<ParseObject> teamsList, ParseException e) {
                     if (e == null) {
@@ -57,18 +58,16 @@ public class UpdateInfo {
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("AndroidTest");
             // query.whereEqualTo("playerName", "Dan Stemkoski");
+            query.selectKeys(Arrays.asList("teamNumber"));
             query.findInBackground(new FindCallback<ParseObject>() {
                 public void done(List<ParseObject> objectList, ParseException e) {
                     if (e == null) {
-                        Log.d("Updated Info", "Retrieved " + objectList.get(0).get("teamNumber").toString());
-                        Log.d("Updated Info", "Retrieved " + objectList.toString());
-
 
                         for(int i = 0; i < objectList.size(); i++){
                                 //if(objectList.get(i).getJSONObject("Team1155").getInt("number") == (Integer.parseInt(teamNumber))){
-                                    Log.d("Updated Info", "Team " + objectList.get(i).get("teamNumber").toString() + ":"+objectList.get(i).get("teamKey").toString());
+                                    Log.d("Updated Info", "Team " + objectList.get(i).get("teamNumber").toString());
                                 //}
-                            //teamNumbers.add(objectList.get(i).get("teamNumber").toString());
+                            teamNumbers.add(objectList.get(i).getInt("teamNumber") + "");
 
                         }
                     } else {
@@ -79,6 +78,7 @@ public class UpdateInfo {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Log.d("UpdateInfo", teamNumbers.toString());
     }
 
     public String parseTestMethod() {
