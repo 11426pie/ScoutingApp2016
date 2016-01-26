@@ -23,9 +23,9 @@ import java.util.List;
 public class UpdateInfo {
     private int objectCount;
     ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
-    private String teamNumber;
+    public static ArrayList<String> teamNumbers;
 
-    public void getTeams() {
+    public static void getTeams() {
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Templates");
             // query.whereEqualTo("playerName", "Dan Stemkoski");
@@ -49,29 +49,24 @@ public class UpdateInfo {
         }
 
     }
-    public void getJSONByTeam(String t){
-        teamNumber = t;
+    public static void getJSONByTeam(String t){
+
         try {
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("AndroidTest");
             // query.whereEqualTo("playerName", "Dan Stemkoski");
             query.findInBackground(new FindCallback<ParseObject>() {
                 public void done(List<ParseObject> objectList, ParseException e) {
                     if (e == null) {
-                        Log.d("Updated Info", "Retrieved " + objectList.get(0).toString());
-                        try {
-                            Log.d("Updated Info", "Retrieved " + objectList.get(0).getJSONObject("Team1155").getInt("number"));
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
-                        }
-                        Log.d("Updated Info", "Retrieved " + objectList.get(0).getJSONObject("Team1155").toString());
+                        Log.d("Updated Info", "Retrieved " + objectList.get(0).get("teamNumber").toString());
+                        Log.d("Updated Info", "Retrieved " + objectList.toString());
+
+
                         for(int i = 0; i < objectList.size(); i++){
-                            try {
-                                if(objectList.get(i).getJSONObject("Team1155").getInt("number") == (Integer.parseInt(teamNumber))){
-                                    Log.d("Updated Info", "NumberTaken " + objectList.get(0).getJSONObject("Team1155").toString());
-                                }
-                            } catch (JSONException e1) {
-                                e1.printStackTrace();
-                            }
+                                //if(objectList.get(i).getJSONObject("Team1155").getInt("number") == (Integer.parseInt(teamNumber))){
+                                    Log.d("Updated Info", "Team " + objectList.get(i).get("teamNumber").toString() + ":"+objectList.get(i).get("teamKey").toString());
+                                //}
+                            teamNumbers.add(objectList.get(i).get("teamNumber").toString());
+
                         }
                     } else {
                         Log.d("score", "Error: " + e.getMessage());
