@@ -23,8 +23,11 @@ import java.util.List;
 public class UpdateInfo {
     private int objectCount;
     ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
-    public static ArrayList<String> teamNumbers;
+    static ArrayList<String> teamNumbers;
 
+    public static ArrayList<String> getTeamNumbers(){
+        return teamNumbers;
+    }
     public static void getTeams() {
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Templates");
@@ -65,7 +68,7 @@ public class UpdateInfo {
                                 //if(objectList.get(i).getJSONObject("Team1155").getInt("number") == (Integer.parseInt(teamNumber))){
                                     Log.d("Updated Info", "Team " + objectList.get(i).get("teamNumber").toString() + ":"+objectList.get(i).get("teamKey").toString());
                                 //}
-                            teamNumbers.add(objectList.get(i).get("teamNumber").toString());
+                            //teamNumbers.add(objectList.get(i).get("teamNumber").toString());
 
                         }
                     } else {

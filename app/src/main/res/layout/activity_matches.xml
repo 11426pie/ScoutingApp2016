@@ -50,6 +50,14 @@
 
     </ScrollView>
 
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchTeams"
+        android:layout_below="@+id/textView2"
+        android:layout_alignRight="@+id/scrollView"
+        android:layout_alignEnd="@+id/scrollView"
+        android:hint="Search Teams"/>
 
 
 </RelativeLayout>

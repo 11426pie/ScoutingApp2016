@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -39,15 +40,16 @@ import okhttp3.Response;
 public class MatchesActivity extends AppCompatActivity implements  View.OnClickListener{
     private final OkHttpClient client = new OkHttpClient();
     public static final String TAG = "MatchesActivity";
-    Gson gson;
-    UpdateInfo update = new UpdateInfo();
+
+    AutoCompleteTextView auto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
 
         findViewById(R.id.button).setOnClickListener(this);
-        gson = new Gson();
+        auto = (AutoCompleteTextView) findViewById(R.id.searchTeams);
+
 
     }
 
@@ -82,7 +84,6 @@ public class MatchesActivity extends AppCompatActivity implements  View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button:
-                update.getJSONByTeam("1155");
                 break;
         }
     }

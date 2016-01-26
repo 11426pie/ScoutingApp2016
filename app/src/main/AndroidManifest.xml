@@ -11,7 +11,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name=".App">
+        >
         <meta-data
             android:name="com.google.android.sign-in.API_KEY"
             android:value="AIzaSyBw5Magwk5BuMs9C9135px3k4OYFXl3fjU" />
@@ -21,16 +21,19 @@
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="EmsYKeBWl79WGbAdhtjWUUYCyJuL7iABao5lbzcM" />
-
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/app_name"
-            >
+            android:name=".App"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name">
         </activity>
         <activity
             android:name=".MatchesActivity"
