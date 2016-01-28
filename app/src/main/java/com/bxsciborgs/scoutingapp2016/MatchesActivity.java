@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
@@ -54,10 +55,12 @@ public class MatchesActivity extends AppCompatActivity implements  View.OnClickL
         auto = (AutoCompleteTextView) findViewById(R.id.searchTeams);
 
         team = UpdateInfo.getTeamNumbers();
-        UpdateInfo.getJSONByTeam("1155");
+        UpdateInfo.getTeam("Team1155");
         adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, team);
         auto.setThreshold(1);
         auto.setAdapter(adapter);
+
+        //auto.getOnItemSelectedListener(this);
 
 
     }

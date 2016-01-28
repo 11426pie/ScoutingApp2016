@@ -24,7 +24,7 @@ public class App extends AppCompatActivity {
         // Initialize global stuff for Yourney
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "KBqIB66cUvbVxjCLMQw1ug3AiTdldkjoDKlhpGuo", "EmsYKeBWl79WGbAdhtjWUUYCyJuL7iABao5lbzcM");
-        UpdateInfo.getJSONByTeam("1155");
+        UpdateInfo.getTeam("Team1155");
 
 
 
