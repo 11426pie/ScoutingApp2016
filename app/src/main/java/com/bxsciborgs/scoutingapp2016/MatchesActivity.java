@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -47,27 +49,34 @@ public class MatchesActivity  extends AppCompatActivity{
     private final OkHttpClient client = new OkHttpClient();
     public static final String TAG = "MatchesActivity";
     String[] teams;
-    AutoCompleteTextView auto;
+
+    String[] teamNumbers=UpdateInfo.teamNumbers.toArray(new String[UpdateInfo.teamNumbers.size()]);
+    String[] teamNicknames = UpdateInfo.teamNicknames.toArray(new String[UpdateInfo.teamNicknames.size()]);
     ArrayAdapter<String> adapter;
-    List<Integer> teamNumbers=UpdateInfo.teamNumbers;
-    List<String> teamNicknames = UpdateInfo.teamNicknames;
-    String[] t = {"1155","2265"};
+    ListView listTeams;
+    SearchView searchTeams;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
+        listTeams = (ListView)findViewById(R.id.listTeams);
+        searchTeams = (SearchView)findViewById(R.id.searchTeams);
 
-       // findViewById(R.id.button).setOnClickListener(this);
-        auto = (AutoCompleteTextView) findViewById(R.id.searchTeams);
+        adapter = new AutocompAdapter(this,teamNumbers,teamNicknames);
+        listTeams.setAdapter(adapter);
 
-        //team =UpdateInfo.teamNumbers;
+        searchTeams.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
-        adapter= new AutocompAdapter(this, teamNicknames);//ArrayAdapter<String>(this, R.layout.custom_autocomplete, teamNicknames);
-        auto.setThreshold(1);
-        auto.setAdapter(adapter);
-
-        //auto.getOnItemSelectedListener(this);
-
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
     }
 
