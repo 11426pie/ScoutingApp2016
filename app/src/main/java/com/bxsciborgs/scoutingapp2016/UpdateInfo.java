@@ -26,27 +26,40 @@ public class UpdateInfo {
     private int objectCount;
     //ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
     static List<String> teamNumbers = new ArrayList<String>();
-    static String[] arr;
+    static String[] teamNicknames;
+    static String[] teamNumber;
+
 
     public static List<String> getTeamNumbers(){
         return teamNumbers;
     }
-
-    public static void getTeam(String t){
-
-        final String KEY = t;
+    public static void query(String key){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("AndroidTest");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                for (int i=0;i<objects.size();i++){
+                    Log.d("UpdateInfo", objects.get(i).getString("teamNickname"));
+                }
+            }
+        });
+    }
+    /*
+    public static void query(String key) {
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
             query.orderByDescending("createdAt");
-            query.whereExists(KEY);
+            query.whereExists(key);
+            //query.whereEqualTo("number", VALUE);
+
             query.getFirstInBackground(new GetCallback<ParseObject>() {
                 public void done(ParseObject object, ParseException e) {
-                    if (object == null) {
-                        Log.d("score", "The getFirst request failed.");
+                    if (e != null) {
+                        e.printStackTrace();
+                        Log.e("parseException", "error");
+                        // object will be your game score
                     } else {
-                        ParseObject myObject = object.getParseObject(KEY);
-                        Log.d("Object", myObject.toString());
-                        ;
+                        Log.i("teamNum", "" + object.get("number"));
                     }
                 }
             });
@@ -64,10 +77,10 @@ public class UpdateInfo {
             e.printStackTrace();
         }
     }
+    */
 
     public String parseTestMethod() {
         //get first object in teams class and get object id then return it
         return "";
     }
-
 }

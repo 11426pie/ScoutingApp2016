@@ -51,11 +51,12 @@ public class MatchesActivity extends AppCompatActivity implements  View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
+
         findViewById(R.id.button).setOnClickListener(this);
         auto = (AutoCompleteTextView) findViewById(R.id.searchTeams);
 
         team = UpdateInfo.getTeamNumbers();
-        UpdateInfo.getTeam("Team1155");
+        UpdateInfo.query("Team694");
         adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, team);
         auto.setThreshold(1);
         auto.setAdapter(adapter);
