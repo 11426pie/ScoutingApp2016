@@ -28,6 +28,7 @@ public class App extends AppCompatActivity {
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "KBqIB66cUvbVxjCLMQw1ug3AiTdldkjoDKlhpGuo", "EmsYKeBWl79WGbAdhtjWUUYCyJuL7iABao5lbzcM");
         //UpdateInfo.getTeam("Team1155");
+        UpdateInfo.query();
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

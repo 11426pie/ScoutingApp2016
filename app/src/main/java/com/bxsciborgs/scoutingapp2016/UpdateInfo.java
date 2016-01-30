@@ -19,27 +19,30 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class UpdateInfo {
     private int objectCount;
     //ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
-    static List<String> teamNumbers = new ArrayList<String>();
-    static String[] teamNicknames;
+    static List<Integer> teamNumbers = new ArrayList<Integer>();
+    static List<String> teamNicknames = new ArrayList<String>();
     static String[] teamNumber;
+    static HashMap<Integer, String> teams = new HashMap<Integer, String>();
 
 
-    public static List<String> getTeamNumbers(){
-        return teamNumbers;
-    }
-    public static void query(String key){
+    public static void query(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("AndroidTest");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 for (int i=0;i<objects.size();i++){
-                    Log.d("UpdateInfo", objects.get(i).getString("teamNickname"));
+                    teams.put(objects.get(i).getInt("teamNumber"), objects.get(i).getString("teamNickname"));
+                    teamNumbers.add(i, objects.get(i).getInt("teamNumber"));
+                    teamNicknames.add(i, objects.get(i).getString("teamNickname"));
+                    Log.d("UpdateInfo", objects.get(i).getInt("teamNumber") + " : " + teams.get(objects.get(i).getInt("teamNumber")));
+
                 }
             }
         });

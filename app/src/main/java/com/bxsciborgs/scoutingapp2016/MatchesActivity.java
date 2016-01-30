@@ -1,6 +1,10 @@
 package com.bxsciborgs.scoutingapp2016;
 
+import android.app.ListActivity;
+import android.app.LoaderManager;
+import android.content.Loader;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,25 +43,26 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MatchesActivity extends AppCompatActivity implements  View.OnClickListener{
+public class MatchesActivity  extends AppCompatActivity{
     private final OkHttpClient client = new OkHttpClient();
     public static final String TAG = "MatchesActivity";
     String[] teams;
     AutoCompleteTextView auto;
     ArrayAdapter<String> adapter;
-    List<String> team;
+    List<Integer> teamNumbers=UpdateInfo.teamNumbers;
+    List<String> teamNicknames = UpdateInfo.teamNicknames;
     String[] t = {"1155","2265"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
 
-        findViewById(R.id.button).setOnClickListener(this);
+       // findViewById(R.id.button).setOnClickListener(this);
         auto = (AutoCompleteTextView) findViewById(R.id.searchTeams);
 
-        team = UpdateInfo.getTeamNumbers();
-        UpdateInfo.query("Team694");
-        adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, team);
+        //team =UpdateInfo.teamNumbers;
+
+        adapter= new AutocompAdapter(this, teamNicknames);//ArrayAdapter<String>(this, R.layout.custom_autocomplete, teamNicknames);
         auto.setThreshold(1);
         auto.setAdapter(adapter);
 
@@ -92,7 +97,7 @@ public class MatchesActivity extends AppCompatActivity implements  View.OnClickL
     }
 
 
-
+/*
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -100,5 +105,7 @@ public class MatchesActivity extends AppCompatActivity implements  View.OnClickL
                 break;
         }
     }
+    */
+
 
 }
