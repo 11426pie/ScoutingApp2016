@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
-        toMatchesAct = new Intent(this, MatchesActivity.class);
+        toMatchesAct = new Intent(this, Mode.class);
 
         googleData = getSharedPreferences("User",MODE_PRIVATE);
         if(googleData.contains("accountName")){

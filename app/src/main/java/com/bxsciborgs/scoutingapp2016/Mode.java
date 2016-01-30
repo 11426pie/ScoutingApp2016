@@ -1,22 +1,30 @@
 package com.bxsciborgs.scoutingapp2016;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-public class MatchesActivity extends AppCompatActivity {
+public class Mode extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_matches);
+        setContentView(R.layout.activity_mode);
+
+
+        findViewById(R.id.viewButton).setOnClickListener(this);
+        findViewById(R.id.scoutButton).setOnClickListener(this);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_matches, menu);
+        getMenuInflater().inflate(R.menu.menu_mode, menu);
         return true;
     }
 
@@ -33,5 +41,21 @@ public class MatchesActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.viewButton:
+                Intent i = new Intent(this, TeamsActivity.class);
+                startActivity(i);
+                break;
+            case R.id.scoutButton:
+                Intent a =  new  Intent(this, MatchesActivity.class);
+                startActivity(a);
+                break;
+            default:
+                Log.d("Modes", "Neither ID found in switch");
+        }
     }
 }

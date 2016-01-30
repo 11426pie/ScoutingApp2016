@@ -6,4 +6,6 @@
     <string name="signed_in_fmt">You Signed In!</string>
     <string name="signed_out">You Signed out!</string>
     <string name="title_activity_matches">MatchesActivity</string>
+    <string name="title_activity_mode">Mode</string>
+    <string name="title_activity_team_profile">TeamProfile</string>
 </resources>

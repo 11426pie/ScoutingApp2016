@@ -5,6 +5,7 @@ package com.bxsciborgs.scoutingapp2016;
  */
 import android.util.Log;
 
+import com.google.gson.JsonObject;
 import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -26,27 +27,83 @@ import java.util.List;
 public class UpdateInfo {
     private int objectCount;
     //ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
-    static List<String > teamNumbers = new ArrayList<String>();
+    static List<Integer > teamNumbers = new ArrayList<Integer>();
     static List<String> teamNicknames = new ArrayList<String>();
     static String[] teamNumber;
-    static HashMap<Integer, String> teams = new HashMap<Integer, String>();
+    static HashMap<String,Integer> teams = new HashMap<String, Integer>();
 
+//Pulls all of the teams and prints the teamNumber and teamName
+   /* public static List<JSONObject> getTeamMatches(int teamNumber){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
+        query.whereEqualTo("number", teamNumber);
+        query.getFirstInBackground(new FindCallback<ParseObject>(){
+            @Override
+            public void done(List<ParseObject> objects, ParseException e){
 
+            }
+        });
+        return null;
+        }
+    */
     public static void query(){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("AndroidTest");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
-                for (int i=0;i<objects.size();i++){
-                    teams.put(objects.get(i).getInt("teamNumber"), objects.get(i).getString("teamNickname"));
-                    teamNumbers.add(i, objects.get(i).getInt("teamNumber") + "");
+                for (int i = 0; i < objects.size(); i++) {
+                    teams.put(objects.get(i).getString("teamNickname"), objects.get(i).getInt("teamNumber"));
+                    teamNumbers.add(i, objects.get(i).getInt("teamNumber"));
                     teamNicknames.add(i, objects.get(i).getString("teamNickname"));
-                    Log.d("UpdateInfo", objects.get(i).getInt("teamNumber") + " : " + teams.get(objects.get(i).getInt("teamNumber")));
+                    Log.d("UpdateInfo", objects.get(i).getInt("teamNumber") + " : " + objects.get(i).getString("teamNickname"));
+
 
                 }
             }
         });
     }
+//Pushes info TeamInfo key on Parse database
+    public static void pushTeamInfo(int teamNumber) throws JSONException {
+        //"avgDefenseScore":null,"avgRoundScore":null
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
+        query.whereEqualTo("teamNumber", teamNumber);
+        final JSONObject template = new JSONObject();
+        JSONArray rounds = new JSONArray();
+        JSONObject stats = new JSONObject();
+        stats.put("avgDefenseScore",1);
+        stats.put("avgRoundScore",1);
+        template.put("rounds", rounds);
+        template.put("stats", stats);
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                object.put("TeamInfo", template);
+                object.pinInBackground();
+                object.saveInBackground();
+            }
+        });
+    }
+
+
+
+
+
+//Gets a team's object, edits, pushes
+    public static JSONObject teamInfo;
+    public static JSONObject updateTeam(int teamNumber){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
+        query.fromLocalDatastore();
+        query.whereEqualTo("teamNumber", teamNumber);
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                 teamInfo= object.getJSONObject("TeamInfo");
+
+            }
+        });
+        return teamInfo;
+    }
+
+
     /*
     public static void query(String key) {
         try {

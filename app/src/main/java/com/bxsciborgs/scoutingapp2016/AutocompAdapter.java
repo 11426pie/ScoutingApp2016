@@ -13,29 +13,30 @@ import java.util.List;
 /**
  * Created by subin on 1/29/16.
  */
-class AutocompAdapter extends ArrayAdapter<String> {private final Activity context;
-    private final String[] teamNums;
-    private final String[] teamNicks;
+class AutocompAdapter extends ArrayAdapter<String> {
+    //private final Activity context;
+    private final List<String> names;
+   private final List<Integer> nums;
 
-    public AutocompAdapter(Activity context, String[] nums, String[] nick) {
-        super(context, R.layout.custom_autocomplete, nick);
+    public AutocompAdapter(Context context, List<String> name, List<Integer> num) {
+        super(context, R.layout.custom_autocomplete, name);
         // TODO Auto-generated constructor stub
 
-        this.context=context;
-        this.teamNums=nums;
-        this.teamNicks=nick;
+        //this.context=context;
+        this.names=name;
+        this.nums=num;
     }
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater=LayoutInflater.from(getContext());
+        View customView=inflater.inflate(R.layout.custom_autocomplete, parent, false);
 
-    public View getView(int position,View view,ViewGroup parent) {
-        LayoutInflater inflater=context.getLayoutInflater();
-        View rowView=inflater.inflate(R.layout.custom_autocomplete, parent,true);
+        TextView number = (TextView)customView.findViewById(R.id.teamNumber);
+        TextView nickname= (TextView)customView.findViewById(R.id.teamNickname);
+        String name = names.get(position);
+        number.setText(name);
+        nickname.setText(nums.get(position).toString());
 
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.teamNickname);
-        TextView extratxt = (TextView) rowView.findViewById(R.id.teamNumber);
-
-        txtTitle.setText(teamNums[position]);
-        extratxt.setText(teamNicks[position]);
-        return rowView;
-
-    };
+        return customView;
+    }
 }

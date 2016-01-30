@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.crashlytics.android.Crashlytics;
 import com.parse.Parse;
 
+import org.json.JSONException;
+
 import io.fabric.sdk.android.Fabric;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -26,9 +28,20 @@ public class App extends AppCompatActivity {
 
         // Initialize global stuff for Yourney
         Parse.enableLocalDatastore(this);
+        try {
+            Thread.sleep(1000);                 //1000 milliseconds is one second.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
         Parse.initialize(this, "KBqIB66cUvbVxjCLMQw1ug3AiTdldkjoDKlhpGuo", "EmsYKeBWl79WGbAdhtjWUUYCyJuL7iABao5lbzcM");
         //UpdateInfo.getTeam("Team1155");
         UpdateInfo.query();
+
+        try {
+            UpdateInfo.pushTeamInfo(1155);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
