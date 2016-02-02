@@ -25,12 +25,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.parse.FindCallback;
+import com.parse.LogInCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements  View.OnClickListener{
     public static final String TAG = "LoginActivity";
@@ -44,11 +51,24 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
     UpdateInfo update;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-      //  update = new UpdateInfo();
+
+        ParseUser user = new ParseUser();
+        user.setUsername("SampleUser");
+        user.setEmail("sample@sample.com");
+        user.setPassword("");
+        user.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null) {
+                    Log.d(TAG, "Signed In!");
+                }
+            }
+        });
 
 
 
@@ -64,7 +84,6 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        mStatusTextView = (TextView)findViewById(R.id.testText);
 
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -112,15 +131,45 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         if (result.isSuccess()) {
 
             // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
-            mStatusTextView.setText(acct.getDisplayName()+ " has signed in!");
+            final GoogleSignInAccount acct = result.getSignInAccount();
+            //mStatusTextView.setText(acct.getDisplayName() + " has signed in!");
             updateUI(true, acct);
             Log.d(TAG, acct.getDisplayName());
             googleData = getSharedPreferences("User",MODE_PRIVATE);
-            googleData.edit().putString("accountName",acct.getDisplayName());
+            googleData.edit().putString("accountName", acct.getDisplayName());
+            /*
+            ParseQuery userQuery = ParseUser.getQuery();
+            userQuery.whereEqualTo("email", acct.getEmail());
+            userQuery.findInBackground(new FindCallback<ParseUser>() {
+                public void done(List<ParseUser> objects, ParseException e) {
+                    if (e == null) {
+                        // The query was successful.
+                        try {
+                            ParseUser.logIn(acct.getDisplayName(),"");
+                            Log.d(TAG, acct.getDisplayName() + " Logged In!");
+                        } catch (ParseException e1) {
+                            e1.printStackTrace();
+                        }
+                    } else {
+                        // Sign up a new Parse user
+
+
+                        try {
+                            user.signUp();
+                            Log.d(TAG,acct.getDisplayName() + " Signed Up!");
+                        } catch (ParseException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+
+            });*/
+
+
+
         } else {
             // Signed out, show unauthenticated UI
-            updateUI(false,null);
+            updateUI(false, null);
         }
     }
 
@@ -141,7 +190,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
             toast.show();
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_button).setVisibility(View.GONE);
-            mStatusTextView.setText("Signed Out!");
+            //mStatusTextView.setText("Signed Out!");
         }
     }
 

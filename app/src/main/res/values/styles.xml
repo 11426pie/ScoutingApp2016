@@ -26,4 +26,18 @@
     <color name="black">#000000</color>
     <color name="ripeLemon">#F7CA18</color>
 
+    <color name="turquoise">#1abc9c</color>
+    <color name="greenSea">#16a085</color>
+
+    <color name="wetAsphalt">#34495e</color>
+    <color name="midnightBlue">#2c3e50</color>
+
+    <color name="emerald">#40d47e</color>
+    <color name="nephritis">#27ae60</color>
+
+    <color name="peterRiver">#3498db</color>
+    <color name="belizeHole">#2980b9</color>
+
+    <color name="alizarin">#e74c3c</color>
+    <color name="pomegranate">#c0392b</color>
 </resources>

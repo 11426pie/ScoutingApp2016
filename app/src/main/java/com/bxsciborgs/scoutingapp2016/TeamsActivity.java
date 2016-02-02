@@ -25,6 +25,7 @@ public class TeamsActivity  extends AppCompatActivity{
     ArrayAdapter<String> adapter;
     List<Integer> teamNumbers=UpdateInfo.teamNumbers;
     List<String> teamNicknames = UpdateInfo.teamNicknames;
+    String[] nicknamesArray = UpdateInfo.teamNumberArray;
     String[] t = {"1155","2265"};
     ListView listTeams;
     View settingsButton;
@@ -63,6 +64,7 @@ public class TeamsActivity  extends AppCompatActivity{
                 Bundle teamName = new Bundle();
                 teamName.putString("nickname", value);
                 toTeamProf.putExtras(teamName);
+
 
                 startActivity(toTeamProf);
 

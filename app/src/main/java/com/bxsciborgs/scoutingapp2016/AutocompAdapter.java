@@ -34,8 +34,8 @@ class AutocompAdapter extends ArrayAdapter<String> {
         TextView number = (TextView)customView.findViewById(R.id.teamNumber);
         TextView nickname= (TextView)customView.findViewById(R.id.teamNickname);
         String name = names.get(position);
-        number.setText(name);
-        nickname.setText(nums.get(position).toString());
+        number.setText(nums.get(position).toString());
+        nickname.setText(name);
 
         return customView;
     }

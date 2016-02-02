@@ -17,7 +17,8 @@
         android:id="@+id/nickname"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp" />
+        android:layout_marginTop="29dp"
+        android:textColor="@color/yellow"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,5 +31,29 @@
         android:layout_below="@+id/nickname"
         android:layout_alignRight="@+id/nickname"
         android:layout_alignEnd="@+id/nickname" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Average Score"
+        android:layout_marginTop="57dp"
+        android:layout_below="@+id/nickname"
+        android:layout_alignRight="@+id/nickname"
+        android:layout_alignEnd="@+id/nickname"
+        android:textColor="@color/yellow"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/averagescore"
+        android:layout_marginTop="57dp"
+        android:layout_below="@+id/nickname"
+        android:layout_alignRight="@+id/nickname"
+        android:layout_alignEnd="@+id/nickname"
+        android:textColor="@color/yellow"/>
+
 
 </LinearLayout>

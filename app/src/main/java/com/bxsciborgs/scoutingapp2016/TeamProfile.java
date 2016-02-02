@@ -21,6 +21,9 @@ public class TeamProfile extends AppCompatActivity {
         teamNickname.setText(selectedNickname);
         TextView teamNumber = (TextView)findViewById(R.id.teamnumber);
         teamNumber.setText(UpdateInfo.teams.get(selectedNickname).toString());
+        TextView averageScore = (TextView)findViewById(R.id.averagescore);
+//        averageScore.setText(UpdateInfo.averageRoundScore.get(selectedNickname).toString());
+
     }
 
     @Override

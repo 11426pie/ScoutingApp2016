@@ -42,7 +42,11 @@ public class App extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        try {
+            UpdateInfo.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();

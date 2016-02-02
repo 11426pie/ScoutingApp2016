@@ -8,8 +8,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingBottom="15dp"
+        android:paddingTop="15dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text=""
         android:id="@+id/teamNumber"
         android:layout_weight="1"
         android:gravity="left" />
@@ -22,5 +22,6 @@
         android:id="@+id/teamNickname"
         android:layout_weight="1"
         android:paddingBottom="15dp"
+        android:paddingTop="15dp"
         android:gravity="right" />
 </LinearLayout>
