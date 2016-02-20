@@ -8,4 +8,5 @@
     <string name="title_activity_matches">MatchesActivity</string>
     <string name="title_activity_mode">Mode</string>
     <string name="title_activity_team_profile">TeamProfile</string>
+    <string name="title_activity_match">MatchActivity</string>
 </resources>

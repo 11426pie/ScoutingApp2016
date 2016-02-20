@@ -102,7 +102,7 @@ public static void run() throws Exception {
                         e1.printStackTrace();
                     }
 
-                    Log.d("UpdateInfo", objects.get(i).getInt("teamNumber") + " : " + objects.get(i).getString("teamNickname"));
+                  //Log.d("UpdateInfo", objects.get(i).getInt("teamNumber") + " : " + objects.get(i).getString("teamNickname"));
 
 
                 }
@@ -191,4 +191,6 @@ public static void run() throws Exception {
         //get first object in teams class and get object id then return it
         return "";
     }
+
+
 }

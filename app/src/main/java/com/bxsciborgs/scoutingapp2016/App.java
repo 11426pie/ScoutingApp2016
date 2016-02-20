@@ -37,17 +37,21 @@ public class App extends AppCompatActivity {
         //UpdateInfo.getTeam("Team1155");
         UpdateInfo.query();
 
+
+
+        /*
         try {
-            UpdateInfo.pushTeamInfo(1155);
+            //UpdateInfo.pushTeamInfo(1155);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        */
         try {
-            UpdateInfo.run();
+           // UpdateInfo.run();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, Mode.class);
         startActivity(intent);
         finish();
     }
