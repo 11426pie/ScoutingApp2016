@@ -35,7 +35,7 @@ public class App extends AppCompatActivity {
         }
         Parse.initialize(this, "KBqIB66cUvbVxjCLMQw1ug3AiTdldkjoDKlhpGuo", "EmsYKeBWl79WGbAdhtjWUUYCyJuL7iABao5lbzcM");
         //UpdateInfo.getTeam("Team1155");
-        UpdateInfo.query();
+       //UpdateInfo.query();
 
 
 
@@ -47,7 +47,7 @@ public class App extends AppCompatActivity {
         }
         */
         try {
-           // UpdateInfo.run();
+           UpdateInfo.run();
         } catch (Exception e) {
             e.printStackTrace();
         }

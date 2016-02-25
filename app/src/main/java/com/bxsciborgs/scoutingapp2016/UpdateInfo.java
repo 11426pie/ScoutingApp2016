@@ -16,7 +16,7 @@ import com.parse.ParseQuery;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,9 +42,16 @@ public class UpdateInfo {
     static HashMap<String,Integer> teams = new HashMap<String, Integer>();
     private static final OkHttpClient client = new OkHttpClient();
     static String responseBody;
-    static JSONArray res;
+    static JSONArray matches;
 
-//Pulls all of the teams and prints the teamNumber and teamName
+    static JSONArray matchesInfo;
+    static List<JSONObject> matchAlliances= new ArrayList<JSONObject>();
+    static JSONArray responseJSON;
+    static JSONArray responseMatches;
+    static List<JSONObject> alliances;
+
+
+    //Pulls all of the teams and prints the teamNumber and teamName
    /* public static List<JSONObject> getTeamMatches(int teamNumber){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
         query.whereEqualTo("number", teamNumber);
@@ -58,6 +65,7 @@ public class UpdateInfo {
         }
     */
 public static void run() throws Exception {
+    Log.d("UpdateInfo", "Made Request...");
     Request request = new Request.Builder()
             .url("http://thebluealliance.com/api/v2/event/2014nyny/matches")
             .addHeader("X-TBA-App-Id","frc1155:scouting-app:v01")
@@ -73,19 +81,36 @@ public static void run() throws Exception {
         public void onResponse(Call call, Response response) throws IOException {
 
             responseBody = response.body().string();
+
             try {
-                res = new JSONArray(responseBody);
+                matchesInfo = new JSONArray(responseBody);
+                for(int i=0;i<matchesInfo.length();i++){
+                    JSONObject alliance = new JSONObject();
+                    alliance.put("Match " + i, matchesInfo.getJSONObject(i).getJSONObject("alliances"));
+                    matchAlliances.add(i, alliance);
+                }
+                Log.d("UpdateInfo", matchAlliances.toString());
+
             } catch (JSONException e) {
-                e.printStackTrace();
+               // e.printStackTrace();
+                Log.d("UpdateInfo", "OkHttp request Error!");
             }
+           // Log.v("UpdateInfo", res.toString());
+            /*
             try {
                 res.getJSONObject(0).getJSONObject("alliances").getJSONObject("blue").getInt("score");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            */
 
         }
+
     });
+    responseJSON = new JSONArray(responseBody);
+    for(int i=0;i<responseJSON.length();i++){
+        alliances.add(i,responseJSON.getJSONObject(i).getJSONObject("alliances"));
+    }
 }
     public static void query(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
@@ -98,14 +123,15 @@ public static void run() throws Exception {
                     teamNicknames.add(i, objects.get(i).getString("teamNickname"));
                     try {
                         averageRoundScore.put(objects.get(i).getString("teamNickname"), objects.get(i).getJSONObject("TeamInfo").getJSONObject("stats").getInt("avgRoundScore"));
+                        Log.v("UpdateInfo", "Works!");
                     } catch (JSONException e1) {
-                        e1.printStackTrace();
+                       // e1.printStackTrace();
+                       // Log.d("UI","Error");
                     }
 
                   //Log.d("UpdateInfo", objects.get(i).getInt("teamNumber") + " : " + objects.get(i).getString("teamNickname"));
-
-
                 }
+
             }
         });
     }
