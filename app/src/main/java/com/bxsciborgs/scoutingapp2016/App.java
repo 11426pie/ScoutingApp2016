@@ -13,21 +13,29 @@ import android.support.v7.app.AppCompatActivity;
 import com.crashlytics.android.Crashlytics;
 import com.parse.Parse;
 
+import org.jdeferred.Deferred;
+import org.jdeferred.DeferredFutureTask;
+import org.jdeferred.Promise;
 import org.json.JSONException;
 
 import io.fabric.sdk.android.Fabric;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+
 
 public class App extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
-
         // Initialize global stuff for Yourney
         Parse.enableLocalDatastore(this);
+
+
+
         try {
             Thread.sleep(1000);                 //1000 milliseconds is one second.
         } catch(InterruptedException ex) {
@@ -35,7 +43,8 @@ public class App extends AppCompatActivity {
         }
         Parse.initialize(this, "KBqIB66cUvbVxjCLMQw1ug3AiTdldkjoDKlhpGuo", "EmsYKeBWl79WGbAdhtjWUUYCyJuL7iABao5lbzcM");
         //UpdateInfo.getTeam("Team1155");
-       //UpdateInfo.query();
+       UpdateInfo.query();
+
 
 
 

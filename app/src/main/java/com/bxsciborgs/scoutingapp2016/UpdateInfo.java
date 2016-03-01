@@ -105,7 +105,7 @@ public static void run() throws Exception {
             */
 
         }
-
+/**/
     });
     responseJSON = new JSONArray(responseBody);
     for(int i=0;i<responseJSON.length();i++){
@@ -135,31 +135,6 @@ public static void run() throws Exception {
             }
         });
     }
-//Pushes info TeamInfo key on Parse database
-    public static void pushTeamInfo(int teamNumber) throws JSONException {
-        //"avgDefenseScore":null,"avgRoundScore":null
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
-        query.whereEqualTo("teamNumber", teamNumber);
-        final JSONObject template = new JSONObject();
-        JSONArray rounds = new JSONArray();
-        JSONObject stats = new JSONObject();
-        stats.put("avgDefenseScore",1);
-        stats.put("avgRoundScore",1);
-        template.put("rounds", rounds);
-        template.put("stats", stats);
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject object, ParseException e) {
-                object.put("TeamInfo", template);
-                object.pinInBackground();
-                object.saveInBackground();
-            }
-        });
-    }
-
-
-
-
 
 //Gets a team's object, edits, pushes
     public static JSONObject teamInfo;
@@ -177,41 +152,6 @@ public static void run() throws Exception {
         return teamInfo;
     }
 
-
-    /*
-    public static void query(String key) {
-        try {
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
-            query.orderByDescending("createdAt");
-            query.whereExists(key);
-            //query.whereEqualTo("number", VALUE);
-
-            query.getFirstInBackground(new GetCallback<ParseObject>() {
-                public void done(ParseObject object, ParseException e) {
-                    if (e != null) {
-                        e.printStackTrace();
-                        Log.e("parseException", "error");
-                        // object will be your game score
-                    } else {
-                        Log.i("teamNum", "" + object.get("number"));
-                    }
-                }
-            });
-//            query.findInBackground(new FindCallback<ParseObject>() {
-//                public void done(List<ParseObject> objectList, ParseException e) {
-//                    if (e == null) {
-//
-//                        ParseOb
-//                    } else {
-//                        Log.d("score", "Error: " + e.getMessage());
-//                    }
-//                }
-//            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    */
 
     public String parseTestMethod() {
         //get first object in teams class and get object id then return it
