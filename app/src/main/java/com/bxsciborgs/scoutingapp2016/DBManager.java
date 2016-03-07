@@ -20,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import org.apache.commons.io.IOUtils;
 
+import bolts.TaskCompletionSource;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -30,15 +31,17 @@ import okhttp3.Response;
 /*TODO make the completion in pull return the JSONObject for usage, work on completion blocks in addAllTeams and createNewClass */
 public class DBManager {
 
+
     public static void pull(String className, String rowKey, Object rowValue, final String finalKey){
+        final TaskCompletionSource<JSONObject> result = new TaskCompletionSource();
         ParseQuery<ParseObject> query = ParseQuery.getQuery(className);
         query.whereEqualTo(rowKey, rowValue);
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, ParseException e) {
                 if(e == null){
-                    //TODO RETURN THIS DAMN JSON
                     JSONObject json = object.getJSONObject(finalKey);
+                    result.setResult(json);
                 }else{
                     Log.d("DBManager", "Could not get JSON object.");
                 }

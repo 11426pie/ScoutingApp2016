@@ -18,6 +18,7 @@ public class Round {
     public Round(int roundNumber){
         this.roundNumber = roundNumber;
         DBManager.pull("Templates", "templateType", "RoundTemplate", "templateJSON");
+
         //TODO json return
     }
 
