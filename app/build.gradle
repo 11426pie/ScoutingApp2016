@@ -52,5 +52,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.0.+'
     compile 'org.jdeferred:jdeferred-android-aar:1.+'
     compile 'org.apache.directory.studio:org.apache.commons.io:2.4'
+    compile 'com.parse.bolts:bolts-tasks:1.4.0'
+    compile 'com.parse.bolts:bolts-applinks:1.4.0'
 }
 
