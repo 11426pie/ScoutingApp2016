@@ -1,8 +1,5 @@
 package com.bxsciborgs.scoutingapp2016;
 
-/**
- * Created by subin on 1/19/16.
- */
 import android.util.Log;
 
 import com.google.gson.JsonObject;
@@ -34,8 +31,8 @@ import okhttp3.Response;
 public class UpdateInfo {
     private int objectCount;
     //ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
-    static List<Integer> teamNumbers = new ArrayList<Integer>();
-    static List<String> teamNicknames = new ArrayList<String>();
+    static List<Integer> teamNumbers = new ArrayList<>();
+    static List<String> teamNicknames = new ArrayList<>();
     static String[] teamNumberArray = teamNicknames.toArray(new String[teamNicknames.size()]);
     static HashMap<String,Integer> averageRoundScore = new HashMap<String ,Integer>();
     static String[] teamNumber;
@@ -45,7 +42,7 @@ public class UpdateInfo {
     static JSONArray matches;
 
     static JSONArray matchesInfo;
-    static List<JSONObject> matchAlliances= new ArrayList<JSONObject>();
+    static List<JSONObject> matchAlliances= new ArrayList<>();
     static JSONArray responseJSON;
     static JSONArray responseMatches;
     static List<JSONObject> alliances;
@@ -108,7 +105,7 @@ public class UpdateInfo {
     /**/
         });
         responseJSON = new JSONArray(responseBody);
-        for(int i=0;i<responseJSON.length();i++){
+        for(int i=0;i<matchAlliances.size();i++){
             alliances.add(i,responseJSON.getJSONObject(i).getJSONObject("alliances"));
         }
     }
