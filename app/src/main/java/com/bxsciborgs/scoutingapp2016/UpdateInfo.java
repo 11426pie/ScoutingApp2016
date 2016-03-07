@@ -34,7 +34,7 @@ import okhttp3.Response;
 public class UpdateInfo {
     private int objectCount;
     //ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
-    static List<Integer > teamNumbers = new ArrayList<Integer>();
+    static List<Integer> teamNumbers = new ArrayList<Integer>();
     static List<String> teamNicknames = new ArrayList<String>();
     static String[] teamNumberArray = teamNicknames.toArray(new String[teamNicknames.size()]);
     static HashMap<String,Integer> averageRoundScore = new HashMap<String ,Integer>();
@@ -64,54 +64,54 @@ public class UpdateInfo {
         return null;
         }
     */
-public static void run() throws Exception {
-    Log.d("UpdateInfo", "Made Request...");
-    Request request = new Request.Builder()
-            .url("http://thebluealliance.com/api/v2/event/2014nyny/matches")
-            .addHeader("X-TBA-App-Id","frc1155:scouting-app:v01")
-            .build();
+    public static void run() throws Exception {
+        Log.d("UpdateInfo", "Made Request...");
+        Request request = new Request.Builder()
+                .url("http://thebluealliance.com/api/v2/event/2014nyny/matches")
+                .addHeader("X-TBA-App-Id","frc1155:scouting-app:v01")
+                .build();
 
-    client.newCall(request).enqueue(new Callback() {
-        @Override
-        public void onFailure(Call call, IOException e) {
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
 
-        }
+            }
 
-        @Override
-        public void onResponse(Call call, Response response) throws IOException {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
 
-            responseBody = response.body().string();
+                responseBody = response.body().string();
 
-            try {
-                matchesInfo = new JSONArray(responseBody);
-                for(int i=0;i<matchesInfo.length();i++){
-                    JSONObject alliance = new JSONObject();
-                    alliance.put("Match " + i, matchesInfo.getJSONObject(i).getJSONObject("alliances"));
-                    matchAlliances.add(i, alliance);
+                try {
+                    matchesInfo = new JSONArray(responseBody);
+                    for(int i=0;i<matchesInfo.length();i++){
+                        JSONObject alliance = new JSONObject();
+                        alliance.put("Match " + i, matchesInfo.getJSONObject(i).getJSONObject("alliances"));
+                        matchAlliances.add(i, alliance);
+                    }
+                    Log.d("UpdateInfo", matchAlliances.toString());
+
+                } catch (JSONException e) {
+                   // e.printStackTrace();
+                    Log.d("UpdateInfo", "OkHttp request Error!");
                 }
-                Log.d("UpdateInfo", matchAlliances.toString());
+               // Log.v("UpdateInfo", res.toString());
+                /*
+                try {
+                    res.getJSONObject(0).getJSONObject("alliances").getJSONObject("blue").getInt("score");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                */
 
-            } catch (JSONException e) {
-               // e.printStackTrace();
-                Log.d("UpdateInfo", "OkHttp request Error!");
             }
-           // Log.v("UpdateInfo", res.toString());
-            /*
-            try {
-                res.getJSONObject(0).getJSONObject("alliances").getJSONObject("blue").getInt("score");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            */
-
+    /**/
+        });
+        responseJSON = new JSONArray(responseBody);
+        for(int i=0;i<responseJSON.length();i++){
+            alliances.add(i,responseJSON.getJSONObject(i).getJSONObject("alliances"));
         }
-/**/
-    });
-    responseJSON = new JSONArray(responseBody);
-    for(int i=0;i<responseJSON.length();i++){
-        alliances.add(i,responseJSON.getJSONObject(i).getJSONObject("alliances"));
     }
-}
     public static void query(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
         query.findInBackground(new FindCallback<ParseObject>() {

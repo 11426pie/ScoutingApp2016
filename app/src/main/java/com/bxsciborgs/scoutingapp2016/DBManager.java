@@ -12,8 +12,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import org.apache.commons.io.IOUtils;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -22,33 +27,20 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-/**
- * Created by subin on 3/1/16.
- */
-
+/*TODO make the completion in pull return the JSONObject for usage, work on completion blocks in addAllTeams and createNewClass */
 public class DBManager {
-    private static String responseBody;
-    private static JSONArray matchesInfo;
-
-    public static List<JSONObject> getMatchAlliances() {
-        return matchAlliances;
-    }
-
-    public static JSONArray getMatchesInfo() {
-        return matchesInfo;
-    }
-
-    private static List<JSONObject> matchAlliances;
 
     public static void pull(String className, String rowKey, Object rowValue, final String finalKey){
         ParseQuery<ParseObject> query = ParseQuery.getQuery(className);
         query.whereEqualTo(rowKey, rowValue);
-
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, ParseException e) {
                 if(e == null){
+                    //TODO RETURN THIS DAMN JSON
                     JSONObject json = object.getJSONObject(finalKey);
+                }else{
+                    Log.d("DBManager", "Could not get JSON object.");
                 }
             }
         });
@@ -68,38 +60,42 @@ public class DBManager {
         });
     }
 
-    public static void getBlueAllianceMatches() throws Exception{
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url("http://thebluealliance.com/api/v2/event/2014nyny/matches")
-                .addHeader("X-TBA-App-Id","frc1155:scouting-app:v01")
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                responseBody = response.body().string();
-
-                try {
-                    matchesInfo = new JSONArray(responseBody);
-                    for(int i=0;i<matchesInfo.length();i++){
-                        JSONObject alliance = new JSONObject();
-                        alliance.put("Match " + i, matchesInfo.getJSONObject(i).getJSONObject("alliances"));
-                        matchAlliances.add(i, alliance);
-                    }
-                    Log.d("DBManager", matchAlliances.toString());
-
-                } catch (JSONException e) {
-                    // e.printStackTrace();
-                    Log.d("DBManager", "OkHttp request Error!");
-                }
-            }
-        });
+    public static JSONObject getJSON(String filename) throws IOException,JSONException {
+        File f = new File(filename);
+        InputStream is = new FileInputStream(filename);
+        String jsonTxt = IOUtils.toString(is);
+        JSONObject json = new JSONObject(jsonTxt);
+        return json;
     }
+
+    public static void addAllTeams(){
+        BlueAlliance.sendRequestTeams("nyny");
+        //TODO completion block with:
+        /*for teamNum in teamNumbers {
+            let teamProfile = Team(teamNumber: teamNum)
+            teamProfile.sendSkeleton()
+        }*/
+    }
+
+    public static void createNewClass(String className){
+        BlueAlliance.sendRequestTeams("nyny");
+        //TODO implement the following code into completion block
+        /*for(int i = 0; i < teamNames.length; i++){
+            ParseObject obj = new ParseObject(className);
+            ParseObject.create("teamNumber") = teamNumbers[i];
+            //...
+        }*/
+        /*BlueAlliance.sendRequestTeams(CompetitionCode.Javits, completion: {(teamNames: [String], teamNumbers: [Int])->Void in
+            for i in 0..<teamNames.count {
+                let object = PFObject(className: className)
+                object["teamNumber"] = teamNumbers[i]
+                object["teamKey"] = "frc\(teamNumbers[i])"
+                object["teamNickname"] = teamNames[i]
+                object.saveInBackground()
+            }
+        })*/
+    }
+
+
+
 }
