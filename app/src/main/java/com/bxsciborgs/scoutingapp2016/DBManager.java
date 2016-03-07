@@ -29,6 +29,7 @@ import okhttp3.Response;
 
 /*TODO make the completion in pull return the JSONObject for usage, work on completion blocks in addAllTeams and createNewClass */
 public class DBManager {
+    public static JSONObject pulledJson = new JSONObject();
 
     public static void pull(String className, String rowKey, Object rowValue, final String finalKey){
         ParseQuery<ParseObject> query = ParseQuery.getQuery(className);
@@ -38,7 +39,9 @@ public class DBManager {
             public void done(ParseObject object, ParseException e) {
                 if(e == null){
                     //TODO RETURN THIS DAMN JSON
-                    JSONObject json = object.getJSONObject(finalKey);
+                   pulledJson = object.getJSONObject(finalKey);
+
+
                 }else{
                     Log.d("DBManager", "Could not get JSON object.");
                 }

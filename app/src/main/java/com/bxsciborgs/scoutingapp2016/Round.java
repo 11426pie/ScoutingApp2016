@@ -7,6 +7,9 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import bolts.Task;
+import bolts.TaskCompletionSource;
+
 /**
  * Created by Nik on 3/6/2016.
  */
@@ -17,8 +20,12 @@ public class Round {
 
     public Round(int roundNumber){
         this.roundNumber = roundNumber;
-        DBManager.pull("Templates", "templateType", "RoundTemplate", "templateJSON");
+
+
+        DBManager.pull("Templates", "templateType", "RoundTemplate", "templateJSON") ;
         //TODO json return
+
+        this.template = DBManager.pulledJson;
     }
 
     public HashMap<String, Object> getRound(){

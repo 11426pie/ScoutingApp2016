@@ -21,6 +21,9 @@ import java.util.List;
  */
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolder> {
 
+    private String blueTeam1, blueTeam2, blueTeam3;
+    private String redTeam1, redTeam2, redTeam3;
+
     public MatchesAdapter() {
     }
 
@@ -35,25 +38,39 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolder> {
     @Override
     public void onBindViewHolder(MatchesViewHolder holder, int position, List<Object> payloads) {
         super.onBindViewHolder(holder, position, payloads);
+
+        try {
+            blueTeam1 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("blue").getJSONArray("teams").get(0).toString();
+            blueTeam2 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("blue").getJSONArray("teams").get(1).toString();
+            blueTeam3 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("blue").getJSONArray("teams").get(2).toString();
+
+
+            redTeam1 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("red").getJSONArray("teams").get(0).toString();
+            redTeam2 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("red").getJSONArray("teams").get(1).toString();
+            redTeam3 = UpdateInfo.matchAlliances
+                    .get(position).getJSONObject("Match "+position).getJSONObject("red").getJSONArray("teams").get(2).toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
     @Override
     public int getItemCount() {
-        return 5;
+        return UpdateInfo.alliances.size();
     }
 
     @Override
     public void onBindViewHolder(final MatchesViewHolder holder, int position) {
 
 
-        holder.bTeam1.setText("111");
-        holder.bTeam2.setText("222");
-        holder.bTeam3.setText("333");
+        holder.bTeam1.setText(blueTeam1);
+        holder.bTeam2.setText(blueTeam2);
+        holder.bTeam3.setText(blueTeam3);
 
-        holder.rTeam1.setText("111");
-        holder.rTeam2.setText("222");
-        holder.rTeam3.setText("333");
+        holder.rTeam1.setText(redTeam1);
+        holder.rTeam2.setText(redTeam2);
+        holder.rTeam3.setText(redTeam3);
 
         final Bundle matchNum = new Bundle();
         holder.itemView.setOnClickListener(new View.OnClickListener() {

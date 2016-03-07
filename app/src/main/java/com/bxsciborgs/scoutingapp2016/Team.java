@@ -62,7 +62,7 @@ public class Team {
         })*/
     }
 
-    public static ________ getAllianceAndEnemyTeamsFromMatch(JSONObject match){
+   // public static ________ getAllianceAndEnemyTeamsFromMatch(JSONObject match){
 
 
 
@@ -91,5 +91,5 @@ public class Team {
         }
 
         return (allianceTeams, enemyTeams)*/
-    }
+    //}
 }
