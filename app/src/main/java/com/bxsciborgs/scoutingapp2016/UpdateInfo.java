@@ -18,6 +18,7 @@ import org.json.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,6 +47,8 @@ public class UpdateInfo {
     static JSONArray responseJSON;
     static JSONArray responseMatches;
     static List<JSONObject> alliances;
+
+    static List<JSONObject> teamRoundsData;
 
 
     //Pulls all of the teams and prints the teamNumber and teamName
@@ -109,8 +112,33 @@ public class UpdateInfo {
             alliances.add(i,responseJSON.getJSONObject(i).getJSONObject("alliances"));
         }
     }
+    public static void getTeamInfo(int teamNumber){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
+        query.whereEqualTo("teamNumber", teamNumber);
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                  try {
+                //Log.d("UpdateInfo",);
+
+                    JSONObject teamInfoJson = new JSONObject(object.getJSONObject("TeamInfo").toString());
+
+                    for(int i =0; i<teamInfoJson.getJSONArray("rounds").length();i++){
+                            teamRoundsData.add(i, teamInfoJson.getJSONArray("rounds").getJSONObject(i));
+                    }
+
+                Log.d("UpdateInfo", "HELLO"+teamRoundsData.toString());
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+    }
+
+
     public static void query(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Teams");
+
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {

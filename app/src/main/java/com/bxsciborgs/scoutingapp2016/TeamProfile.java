@@ -14,6 +14,24 @@ public class TeamProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_profile);
 
+        //{"rounds":[{
+        // "autoPoints":{"highGoal":false,"lowGoal":false,"movedToDefense":false,"passedDefense":false},
+        // "comments":"",
+        // "finalScore":0,
+        // "roundNumber":5,
+        // "telePoints":{"challenge":false,
+        //      "defenses":{"numTimesCrossedChevalDeFrise":0,
+        //      "numTimesCrossedDrawbridge":0,
+        //      "numTimesCrossedLowBar":0,
+        //      "numTimesCrossedMoat":0,
+        //      "numTimesCrossedPortcullis":0,
+        //      "numTimesCrossedRamparts":0,
+        //      "numTimesCrossedRockWall":0,
+        //      "numTimesCrossedRoughTerrain":0,
+        //      "numTimesCrossedSallyPort":0},
+        // "goals":{"high":0,"low":0},"scale":false}}],
+        // "stats":{"avgDefenseScore":null,"avgRoundScore":null}}
+
         Intent i = getIntent();
         String selectedNickname = i.getStringExtra("nickname");
 

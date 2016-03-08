@@ -18,8 +18,6 @@ public class MatchesViewHolder extends RecyclerView.ViewHolder{
 
     public MatchesViewHolder(View itemView) {
         super(itemView);
-        comp_Lvl = (TextView)itemView.findViewById(R.id.comp_lv);
-        vMatchNum = (TextView)itemView.findViewById(R.id.MatchNum);
         bTeam1 = (TextView)itemView.findViewById(R.id.team1);
         bTeam2 = (TextView)itemView.findViewById(R.id.team2);
         bTeam3 = (TextView)itemView.findViewById(R.id.team3);
