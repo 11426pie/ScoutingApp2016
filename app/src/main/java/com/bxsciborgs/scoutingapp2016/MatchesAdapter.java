@@ -40,15 +40,14 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolder> {
         super.onBindViewHolder(holder, position, payloads);
 
         try {
-            blueTeam1 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("blue").getJSONArray("teams").get(0).toString();
-            blueTeam2 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("blue").getJSONArray("teams").get(1).toString();
-            blueTeam3 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("blue").getJSONArray("teams").get(2).toString();
+            blueTeam1 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("blue").getJSONArray("teams").get(0).toString().replace("frc","");
+            blueTeam2 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match " + position).getJSONObject("blue").getJSONArray("teams").get(1).toString().replace("frc", "");
+            blueTeam3 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match " + position).getJSONObject("blue").getJSONArray("teams").get(2).toString().replace("frc", "");
 
 
-            redTeam1 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("red").getJSONArray("teams").get(0).toString();
-            redTeam2 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("red").getJSONArray("teams").get(1).toString();
-            redTeam3 = UpdateInfo.matchAlliances
-                    .get(position).getJSONObject("Match "+position).getJSONObject("red").getJSONArray("teams").get(2).toString();
+            redTeam1 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("red").getJSONArray("teams").get(0).toString().replace("frc","");
+            redTeam2 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("red").getJSONArray("teams").get(1).toString().replace("frc","");
+            redTeam3 = UpdateInfo.matchAlliances.get(position).getJSONObject("Match "+position).getJSONObject("red").getJSONArray("teams").get(2).toString().replace("frc","");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -57,12 +56,11 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolder> {
 
     @Override
     public int getItemCount() {
-        return UpdateInfo.alliances.size();
+        return UpdateInfo.matchAlliances.size();
     }
 
     @Override
     public void onBindViewHolder(final MatchesViewHolder holder, int position) {
-
 
         holder.bTeam1.setText(blueTeam1);
         holder.bTeam2.setText(blueTeam2);
@@ -73,20 +71,19 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolder> {
         holder.rTeam3.setText(redTeam3);
 
         final Bundle matchNum = new Bundle();
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             MatchesViewHolder h =holder;
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MatchActivity.class);
                 //you can pass on the Pojo with PARCELABLE
-                matchNum.putString("compLv", h.comp_Lvl.getText().toString());
-                matchNum.putString("bluTeam1", h.bTeam1.getText().toString());
-                matchNum.putString("bluTeam2", h.bTeam2.getText().toString());
-                matchNum.putString("bluTeam3", h.bTeam3.getText().toString());
-                matchNum.putString("redTeam1", h.rTeam1.getText().toString());
-                matchNum.putString("redTeam2", h.rTeam2.getText().toString());
-                matchNum.putString("readTeam3", h.rTeam3.getText().toString());
-                matchNum.putString("matchNum", h.vMatchNum.getText().toString());
+                intent.putExtra("blueTeam1", h.bTeam1.getText().toString());
+                intent.putExtra("blueTeam2", h.bTeam2.getText().toString());
+                intent.putExtra("blueTeam3", h.bTeam3.getText().toString());
+                intent.putExtra("redTeam1", h.rTeam1.getText().toString());
+                intent.putExtra("redTeam2", h.rTeam2.getText().toString());
+                intent.putExtra("redTeam3", h.rTeam3.getText().toString());
                 v.getContext().startActivity(intent);
             }
         });

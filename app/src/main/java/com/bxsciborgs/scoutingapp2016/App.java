@@ -45,6 +45,8 @@ public class App extends AppCompatActivity {
         //UpdateInfo.getTeam("Team1155");
        UpdateInfo.query();
 
+        UpdateInfo.getTeamInfo(5421);
+
 
 
 
