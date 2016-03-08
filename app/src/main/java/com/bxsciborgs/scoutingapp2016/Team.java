@@ -1,12 +1,18 @@
 package com.bxsciborgs.scoutingapp2016;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * Created by Nik on 3/7/2016.
  */
 
-//TODO basically this whole class's methods
+//TODO completion if NEEDED
 public class Team {
     static int teamNumber;
     private static JSONObject teamTemplate;
@@ -19,18 +25,21 @@ public class Team {
     }
 
     public void sendSkeleton(){
-        /*DBManager.pull("Templates", rowKey: "templateType", rowValue: "TeamTemplate", finalKey: "templateJSON", completion: {(result)->Void in
-            var teamJSON = result
-            DBManager.push(ParseClass.TeamsTest.rawValue, rowKey: "teamNumber", rowValue: self.teamNumber, finalKey: "TeamInfo", object: teamJSON.dictionaryObject!)
-        })*/
-        //TODO more of this completion type stuff
+        DBManager.pull("Templates", "templateType", "TeamTemplate", "templateJSON");
+        JSONObject teamJSON = DBManager.pulledJson;
+        HashMap<String,Object> teamDict = new Gson().fromJson(teamJSON.toString(), new TypeToken<HashMap<String, Object>>(){}.getType());
+        DBManager.push("TeamsTEST", "teamNumber", teamNumber, "TeamInfo", teamDict);
     }
 
     public static void createRound(int roundNum){
         currentRound = new Round(roundNum);
     }
 
-    public static void submitCurrentRound(){
+    public static void submitCurrentRound() throws JSONException {
+        DBManager.pull("TeamsTEST", "teamNumber", teamNumber, "TeamInfo");
+        JSONObject teamJSON = DBManager.pulledJson;
+        //Gson gson = new Gson();
+        teamJSON.get("rounds").put(new JSONObject(currentRound.getRound()));
         /*DBManager.pull(ParseClass.TeamsTest.rawValue, rowKey: "teamNumber", rowValue: self.teamNumber, finalKey: "TeamInfo", completion: {(result)->Void in
             var teamJSON = result
             teamJSON["rounds"].arrayObject?.append(self.currentRound.getRound()) //appends current round being edited
@@ -42,7 +51,7 @@ public class Team {
         /*DBManager.pull(ParseClass.TeamsTest.rawValue, rowKey: "teamNumber", rowValue: self.teamNumber, finalKey: "TeamInfo", completion: {(result)->Void in
             var teamJSON = result
             completion(result: teamJSON["rounds"].array!)
-        })
+        }
         print("No rounds found")*/
     }
 
