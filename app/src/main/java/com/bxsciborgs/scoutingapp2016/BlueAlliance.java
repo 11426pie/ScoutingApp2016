@@ -26,7 +26,7 @@ public class BlueAlliance {
     //florida = "flwp"
     private static String responseBody;
     private static JSONArray matchesInfo;
-    private static JSONArray matches;
+    static JSONArray matches;
     private static JSONArray teamsInfo;
 
     public static List<JSONObject> getMatchAlliances() {

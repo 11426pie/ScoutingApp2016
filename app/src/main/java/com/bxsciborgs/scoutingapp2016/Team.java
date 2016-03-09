@@ -3,6 +3,7 @@ package com.bxsciborgs.scoutingapp2016;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,23 +40,20 @@ public class Team {
         DBManager.pull("TeamsTEST", "teamNumber", teamNumber, "TeamInfo");
         JSONObject teamJSON = DBManager.pulledJson;
         //Gson gson = new Gson();
-        teamJSON.get("rounds").put(new JSONObject(currentRound.getRound()));
-        /*DBManager.pull(ParseClass.TeamsTest.rawValue, rowKey: "teamNumber", rowValue: self.teamNumber, finalKey: "TeamInfo", completion: {(result)->Void in
-            var teamJSON = result
-            teamJSON["rounds"].arrayObject?.append(self.currentRound.getRound()) //appends current round being edited
-            DBManager.push(ParseClass.TeamsTest.rawValue, rowKey: "teamNumber", rowValue: self.teamNumber, finalKey: "TeamInfo", object: teamJSON.dictionaryObject!)
-        })*/
+        JSONObject roundJSON = new JSONObject(currentRound.getRound());
+        teamJSON.getJSONArray("rounds").put(roundJSON);
+        HashMap<String,Object> teamDict = new Gson().fromJson(teamJSON.toString(), new TypeToken<HashMap<String, Object>>(){}.getType());
+        DBManager.push("TeamsTEST","teamNumber",teamNumber,"TeamInfo",teamDict);
     }
 
-    public static void getAllRounds(){
-        /*DBManager.pull(ParseClass.TeamsTest.rawValue, rowKey: "teamNumber", rowValue: self.teamNumber, finalKey: "TeamInfo", completion: {(result)->Void in
-            var teamJSON = result
-            completion(result: teamJSON["rounds"].array!)
-        }
-        print("No rounds found")*/
+    public static JSONArray getAllRounds() throws JSONException {
+        DBManager.pull("TeamsTEST", "teamNumber", teamNumber, "TeamInfo");
+        JSONObject teamJSON = DBManager.pulledJson;
+        return teamJSON.getJSONArray("rounds");
+
     }
 
-    public static void getAllParticipatingMatches(){
+    public static void getAllParticipatingMatches() throws JSONException {
         /*BlueAlliance.sendRequestMatches(CompetitionCode.Javits, completion: {(matches: [JSON]) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                     var participatedMatches: [JSON] = []
@@ -69,6 +67,15 @@ public class Team {
             completion(result: participatedMatches)
             })
         })*/
+        BlueAlliance.sendRequestMatches("nyny");
+        JSONArray participatedMatches = new JSONArray();
+        for (int i = 0; i < BlueAlliance.matches.length(); i++){
+            if(BlueAlliance.getTeamsFromMatch(BlueAlliance.matches.get(i)), "blue"){
+                participatedMatches.put(BlueAlliance.matches.get(i));
+            }else if(BlueAlliance.getTeamsFromMatch(BlueAlliance.matches.get(i)), "red").contains(teamNumber){
+                participatedMatches.put(BlueAlliance.matches.get(i));
+            }
+        }
     }
 
    // public static ________ getAllianceAndEnemyTeamsFromMatch(JSONObject match){
