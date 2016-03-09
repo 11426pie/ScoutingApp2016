@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Switch;
 
 public class ScoutingActivity extends AppCompatActivity {
 
@@ -11,6 +12,10 @@ public class ScoutingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scouting);
+
+        Switch abc = (Switch)findViewById(R.id.ABC);
+
+        abc.setText("OMG");
     }
 
     @Override
