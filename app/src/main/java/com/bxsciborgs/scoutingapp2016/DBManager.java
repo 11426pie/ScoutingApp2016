@@ -34,6 +34,24 @@ import static com.bxsciborgs.scoutingapp2016.BlueAlliance.teamNumbers;
 //TODO completion IF NEEDED
 public class DBManager {
     public static JSONObject pulledJson = new JSONObject();
+    public static String[] allJSONKeys = {"comments",
+            "movedToDefense",
+            "passedDefense",
+            "lowGoal",
+            "highGoal",
+            "numTimesCrossedPortcullis",
+            "numTimesCrossedChevalDeFrise",
+            "numTimesCrossedMoat",
+            "numTimesCrossedRamparts",
+            "numTimesCrossedDrawbridge",
+            "numTimesCrossedSallyPort",
+            "numTimesCrossedRockWall",
+            "numTimesCrossedRoughTerrain",
+            "numTimesCrossedLowBar",
+            "high",
+            "low",
+            "challenge",
+            "scale"};
 
     public static void pull(String className, String rowKey, Object rowValue, final String finalKey){
         ParseQuery<ParseObject> query = ParseQuery.getQuery(className);

@@ -7,7 +7,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * Created by Nik on 3/7/2016.
@@ -20,6 +23,7 @@ public class Team {
     private static JSONObject roundTemplate;
     private static JSONObject teamJSON;
     private static Round currentRound;
+    static JSONArray participatingMatches;
 
     public Team(int teamNumber){
         this.teamNumber = teamNumber;
@@ -54,58 +58,46 @@ public class Team {
     }
 
     public static void getAllParticipatingMatches() throws JSONException {
-        /*BlueAlliance.sendRequestMatches(CompetitionCode.Javits, completion: {(matches: [JSON]) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                    var participatedMatches: [JSON] = []
-            for match in matches {
-                if BlueAlliance.getTeamsFromMatch(match, color: "blue").contains(self.teamNumber) {
-                    participatedMatches.append(match)
-                }else if BlueAlliance.getTeamsFromMatch(match, color: "red").contains(self.teamNumber){
-                    participatedMatches.append(match)
-                }
-            }
-            completion(result: participatedMatches)
-            })
-        })*/
         BlueAlliance.sendRequestMatches("nyny");
         JSONArray participatedMatches = new JSONArray();
         for (int i = 0; i < BlueAlliance.matches.length(); i++){
-            if(BlueAlliance.getTeamsFromMatch(BlueAlliance.matches.get(i)), "blue"){
+            if(ArrayUtils.indexOf(BlueAlliance.getTeamsFromMatch(BlueAlliance.matches.getJSONObject(i), "blue"),teamNumber) >= 0){
                 participatedMatches.put(BlueAlliance.matches.get(i));
-            }else if(BlueAlliance.getTeamsFromMatch(BlueAlliance.matches.get(i)), "red").contains(teamNumber){
+            }else if(ArrayUtils.indexOf(BlueAlliance.getTeamsFromMatch(BlueAlliance.matches.getJSONObject(i), "red"),teamNumber) >= 0){
                 participatedMatches.put(BlueAlliance.matches.get(i));
             }
         }
+        participatingMatches = participatedMatches;
     }
 
-   // public static ________ getAllianceAndEnemyTeamsFromMatch(JSONObject match){
-
-
-
-
-        /*var allianceTeams: [Int] = []
-        var enemyTeams: [Int] = []
-
-        if BlueAlliance.getTeamsFromMatch(match, color: "blue").contains(self.teamNumber) {
-            for team in BlueAlliance.getTeamsFromMatch(match, color: "blue") {
-                if (team != 1155) {
-                    allianceTeams.append(team)
+    public static ArrayList<ArrayList<Integer>> getAllianceAndEnemyTeamsFromMatch(JSONObject match) throws JSONException {
+        ArrayList<Integer> allianceTeams = new ArrayList<Integer>();
+        ArrayList<Integer> enemyTeams = new ArrayList<Integer>();
+        if (ArrayUtils.indexOf(BlueAlliance.getTeamsFromMatch(match, "blue"), teamNumber) >= 0) {
+            for (int i = 0; i < BlueAlliance.getTeamsFromMatch(match, "blue").length; i++) {
+                if (BlueAlliance.getTeamsFromMatch(match, "blue")[i] != 1155) {
+                    allianceTeams.add(BlueAlliance.getTeamsFromMatch(match, "blue")[i]);
                 }
             }
-            for team in BlueAlliance.getTeamsFromMatch(match, color: "red") {
-                enemyTeams.append(team)
+            for (int i = 0; i < BlueAlliance.getTeamsFromMatch(match, "red").length; i++) {
+                enemyTeams.add(BlueAlliance.getTeamsFromMatch(match, "red")[i]);
             }
-        }else if BlueAlliance.getTeamsFromMatch(match, color: "red").contains(self.teamNumber){
-            for team in BlueAlliance.getTeamsFromMatch(match, color: "red") {
-                if (team != 1155) {
-                    allianceTeams.append(team)
+        } else if (ArrayUtils.indexOf(BlueAlliance.getTeamsFromMatch(match, "red"), teamNumber) >= 0) {
+            for (int i = 0; i < BlueAlliance.getTeamsFromMatch(match, "red").length; i++) {
+                if (BlueAlliance.getTeamsFromMatch(match, "blue")[i] != 1155) {
+                    allianceTeams.add(BlueAlliance.getTeamsFromMatch(match, "red")[i]);
                 }
             }
-            for team in BlueAlliance.getTeamsFromMatch(match, color: "blue") {
-                enemyTeams.append(team)
+            for (int i = 0; i < BlueAlliance.getTeamsFromMatch(match, "blue").length; i++) {
+                enemyTeams.add(BlueAlliance.getTeamsFromMatch(match, "blue")[i]);
             }
         }
+        ArrayList<ArrayList<Integer>> bothTeams = new ArrayList<ArrayList<Integer>>();
+        bothTeams.add(allianceTeams);
+        bothTeams.add(enemyTeams);
+        return bothTeams;
+    }
 
-        return (allianceTeams, enemyTeams)*/
-    //}
+
+
 }
