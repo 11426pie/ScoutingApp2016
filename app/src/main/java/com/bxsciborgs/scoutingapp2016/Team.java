@@ -84,7 +84,7 @@ public class Team {
             }
         } else if (ArrayUtils.indexOf(BlueAlliance.getTeamsFromMatch(match, "red"), teamNumber) >= 0) {
             for (int i = 0; i < BlueAlliance.getTeamsFromMatch(match, "red").length; i++) {
-                if (BlueAlliance.getTeamsFromMatch(match, "blue")[i] != 1155) {
+                if (BlueAlliance.getTeamsFromMatch(match, "red")[i] != 1155) {
                     allianceTeams.add(BlueAlliance.getTeamsFromMatch(match, "red")[i]);
                 }
             }

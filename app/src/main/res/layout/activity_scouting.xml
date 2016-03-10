@@ -12,19 +12,105 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Team #"
         android:id="@+id/teamNum"
+        android:layout_below="@+id/autonomousHeader"
+        android:layout_centerHorizontal="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Moved to Defense"
+        android:id="@+id/movedDefense"
+        android:layout_marginTop="32dp"
+        android:checked="false"
+        android:layout_below="@+id/teamNum"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/teamNum"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="32dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Autonomous"
+        android:id="@+id/autonomousHeader"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Switch"
-        android:id="@+id/ABC"
-        android:layout_below="@+id/teamNum"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="23dp"
+        android:text="Passed Defense"
+        android:id="@+id/defensePass"
+        android:checked="false"
+        android:textSize="32dp"
+        android:layout_marginTop="62dp"
+        android:layout_below="@+id/movedDefense"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:checked="false" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Low Goal"
+        android:id="@+id/lowGoal"
+        android:checked="false"
+        android:textSize="32dp"
+        android:layout_marginTop="163dp"
+        android:layout_below="@+id/movedDefense"
+        android:layout_alignRight="@+id/movedDefense"
+        android:layout_alignEnd="@+id/movedDefense"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="High Goal"
+        android:id="@+id/highGoal"
+        android:checked="false"
+        android:textSize="32dp"
+        android:layout_marginTop="71dp"
+        android:layout_below="@+id/lowGoal"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/lowGoal"
+        android:layout_alignEnd="@+id/lowGoal" />
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabMode="fixed"
+                app:tabGravity="fill"/>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+    </android.support.design.widget.CoordinatorLayout>
+
 </RelativeLayout>
