@@ -1,22 +1,19 @@
 package com.bxsciborgs.scoutingapp2016;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Switch;
 
-public class ScoutingActivity extends AppCompatActivity {
-
+/**
+ * Created by Nik on 3/9/2016.
+ */
+public class CaptainViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scouting);
-
-        Switch movedDefense = (Switch)findViewById(R.id.movedDefense);
-        Switch defensePass = (Switch)findViewById(R.id.defensePass);
-        Switch highGoal = (Switch)findViewById(R.id.highGoal);
-        Switch lowGoal = (Switch)findViewById(R.id.lowGoal);
+        setContentView(R.layout.activity_captain);
 
     }
 
